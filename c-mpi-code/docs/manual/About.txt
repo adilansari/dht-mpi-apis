@@ -1,0 +1,10 @@
+
+
+Build manual.html:
+
+asciidoc -n docs/manual/manual.txt
+
+Upload manual to SF.net:
+
+scp docs/manual/manual.html jmwozniak,c-mpi@web.sourceforge.net:/home/project-web/c-mpi/htdocs/index.html
+

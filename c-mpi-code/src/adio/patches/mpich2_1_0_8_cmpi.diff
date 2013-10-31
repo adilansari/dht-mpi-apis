@@ -1,0 +1,140 @@
+Index: src/mpi/romio/configure.in
+===================================================================
+--- src/mpi/romio/configure.in	(revision 4292)
++++ src/mpi/romio/configure.in	(working copy)
+@@ -100,7 +100,7 @@
+ #
+ have_aio=no
+ #
+-known_filesystems="nfs ufs pfs pvfs pvfs2 testfs xfs panfs gridftp lustre bgl bglockless"
++known_filesystems="nfs ufs pfs pvfs pvfs2 testfs xfs panfs gridftp lustre bgl bglockless cmpi"
+ known_mpi_impls="mpich2_mpi mpich_mpi sgi_mpi hp_mpi cray_mpi lam_mpi"
+ #
+ # Defaults
+@@ -127,6 +127,8 @@
+ --with-file-system=name - Build with support for the named file systems],,)
+ AC_ARG_WITH(pvfs2,[
+ --with-pvfs2=path - Path to installation of PVFS (version 2)],,)
++AC_ARG_WITH(cmpi,[
++--with-cmpi=path - Path to CMPI],,)
+ AC_ARG_WITH(mpi,[
+ --with-mpi=name - Specify MPI implementation to build ROMIO for],,)
+ dnl
+@@ -1080,6 +1082,26 @@
+ 	AC_MSG_ERROR([pvfs2-config not found in $with_pvfs2])
+ fi
+ 
++
++# - if 'with-cmpi' given, use that.  complain if we
++#   cannot find it, as this is probably what the user would expect
++# - if we can find 'pvfs2-config' in our path, we can use it to set CFLAGS,
++#   LIBS, and LDFLAGS accordingly
++# - as a fallback, use CFLAGS, LIBS, and LDFLAGS passed in by the user
++# - don't do any of this if --with-file-system was given and did not include
++#   'pvfs2': i.e. don't surprise the user with pvfs support.
++
++if test -n "${with_cmpi}" ; then 
++AC_CHECK_FILE(${with_cmpi}/src/include/cmpi.h, 
++                 CMPI=${withval}
++		 CFLAGS="$CFLAGS -I ${with_cmpi} -I ${with_cmpi}/src/include"
++		 LIBS="$LIBS ${with_cmpi}/lib"
++		 FILE_SYSTEM="cmpi $FILE_SYSTEM" 
++		 file_system_cmpi=1
++                 AC_MSG_RESULT([Using CMPI in ${withval}]),
++		 AC_MSG_ERROR([Could not find CMPI in ${withval}]))
++fi
++
+ #
+ # Print list of configured file systems
+ #
+@@ -1243,6 +1265,10 @@
+ 	AC_DEFINE(ROMIO_GRIDFTP, 1, [Define for ROMIO with gridftp])
+ fi
+ 
++if test -n "$file_system_cmpi"; then
++	AC_DEFINE(ROMIO_CMPI, 1, [Define for ROMIO with cmpi])
++fi
++
+ if test -n "$file_system_bgl"; then
+     SYSDEP_INC=-I${prefix}/include
+ else
+@@ -2155,6 +2181,7 @@
+ 		   adio/ad_pvfs2/Makefile \
+ 		   adio/ad_gridftp/Makefile \
+   		   adio/ad_lustre/Makefile \
++                   adio/ad_cmpi/Makefile \
+                    mpi-io/fortran/Makefile mpi2-other/info/fortran/Makefile \
+                    mpi2-other/array/fortran/Makefile test/fmisc.f \
+                    test/fcoll_test.f test/pfcoll_test.f test/fperf.f \
+Index: src/mpi/romio/adio/include/adio.h
+===================================================================
+--- src/mpi/romio/adio/include/adio.h	(revision 4292)
++++ src/mpi/romio/adio/include/adio.h	(working copy)
+@@ -292,6 +292,7 @@
+ #define ADIO_LUSTRE              163   /* Lustre */
+ #define ADIO_BGL                 164   /* IBM BGL */
+ #define ADIO_BGLOCKLESS          165   /* IBM BGL (lock-free) */
++#define ADIO_CMPI                166   /* CMPI */
+ 
+ #define ADIO_SEEK_SET            SEEK_SET
+ #define ADIO_SEEK_CUR            SEEK_CUR
+Index: src/mpi/romio/adio/include/adioi_fs_proto.h
+===================================================================
+--- src/mpi/romio/adio/include/adioi_fs_proto.h	(revision 4292)
++++ src/mpi/romio/adio/include/adioi_fs_proto.h	(working copy)
+@@ -89,4 +89,9 @@
+ extern struct ADIOI_Fns_struct ADIO_GRIDFTP_operations;
+ #endif
+ 
++#ifdef ROMIO_CMPI
++/* prototypes are in adio/ad_gridftp/ad_gridftp.h */
++extern struct ADIOI_Fns_struct ADIO_CMPI_operations;
+ #endif
++
++#endif
+Index: src/mpi/romio/adio/include/adioi_errmsg.h
+===================================================================
+--- src/mpi/romio/adio/include/adioi_errmsg.h	(revision 4292)
++++ src/mpi/romio/adio/include/adioi_errmsg.h	(working copy)
+@@ -43,7 +43,7 @@
+ 
+ MPI_ERR_IO
+     MPIR_ERR_ETYPE_FRACTIONAL "Only an integral number of etypes can be accessed"
+-    MPIR_ERR_NO_FSTYPE "Can't determine the file-system type. Check the filename/path you provided and try again. Otherwise, prefix the filename with a string to indicate the type of file sytem (piofs:, pfs:, nfs:, ufs:, hfs:, xfs:, sfs:, pvfs:, panfs: ftp: gsiftp:)"
++    MPIR_ERR_NO_FSTYPE "Can't determine the file-system type. Check the filename/path you provided and try again. Otherwise, prefix the filename with a string to indicate the type of file sytem (piofs:, pfs:, nfs:, ufs:, hfs:, xfs:, sfs:, pvfs:, panfs: ftp: gsiftp: cmpi:)"
+     MPIR_ERR_NO_PFS "ROMIO has not been configured to use the PFS file system"
+     MPIR_ERR_NO_PIOFS "ROMIO has not been configured to use the PIOFS file system"
+     MPIR_ERR_NO_UFS "ROMIO has not been configured to use the UFS file system"
+Index: src/mpi/romio/adio/common/ad_fstype.c
+===================================================================
+--- src/mpi/romio/adio/common/ad_fstype.c	(revision 4292)
++++ src/mpi/romio/adio/common/ad_fstype.c	(working copy)
+@@ -535,6 +535,11 @@
+ 	    !strncmp(filename, "BGLOCKLESS:", 11)) {
+ 	*fstype = ADIO_BGLOCKLESS;
+     }
++    else if (!strncmp(filename, "cmpi:", 4)
++              || !strncmp(filename, "CMPI:", 7))
++    {
++        *fstype = ADIO_CMPI;
++    }
+     else {
+ #ifdef ROMIO_NTFS
+ 	*fstype = ADIO_NTFS;
+@@ -756,6 +761,16 @@
+ 	*ops = &ADIO_NTFS_operations;
+ #endif
+     }
++    if (file_system == ADIO_CMPI) {
++#ifndef ROMIO_CMPI
++        *error_code = MPIO_Err_create_code(MPI_SUCCESS, MPIR_ERR_RECOVERABLE,
++                                           myname, __LINE__, MPI_ERR_IO,
++                                           "**iofstypeunsupported", 0);
++        return;
++#else
++        *ops = &ADIO_CMPI_operations;
++#endif
++    }
+     if (file_system == ADIO_TESTFS) {
+ #ifndef ROMIO_TESTFS
+ 	*error_code = MPIO_Err_create_code(MPI_SUCCESS, MPIR_ERR_RECOVERABLE,

@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/p/c-mpi/code/!svn/ver/156/src/cmpi-db
+END
+cmpi-db-fifo-quit.c
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/p/c-mpi/code/!svn/ver/156/src/cmpi-db/cmpi-db-fifo-quit.c
+END
+cmpi-db-fifo.c
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/p/c-mpi/code/!svn/ver/152/src/cmpi-db/cmpi-db-fifo.c
+END
+module.mk.in
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/p/c-mpi/code/!svn/ver/100/src/cmpi-db/module.mk.in
+END

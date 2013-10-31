@@ -1,0 +1,12 @@
+
+Ongoing code modifications:
+
+* Take tools from mpi_tools that do not need MPI and move them to
+  a new module "tools"
+
+* Remove mpi_tools references from code that does not need them
+
+* Simplify header files, move more definitions into the C files
+  that need them
+
+* Migrate away from requiring D=1 for test output

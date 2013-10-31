@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/p/c-mpi/code/!svn/ver/201/test/adts
+END
+test-dpkm_list.c
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/p/c-mpi/code/!svn/ver/197/test/adts/test-dpkm_list.c
+END
+runtest.zsh
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/p/c-mpi/code/!svn/ver/161/test/adts/runtest.zsh
+END
+test_helpers.h
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/p/c-mpi/code/!svn/ver/168/test/adts/test_helpers.h
+END
+About.txt
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/p/c-mpi/code/!svn/ver/1/test/adts/About.txt
+END
+test-lru_table01.c
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/p/c-mpi/code/!svn/ver/201/test/adts/test-lru_table01.c
+END
+test-list.c
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/p/c-mpi/code/!svn/ver/24/test/adts/test-list.c
+END
+test-lru_table02.c
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/p/c-mpi/code/!svn/ver/147/test/adts/test-lru_table02.c
+END
+module.mk.in
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/p/c-mpi/code/!svn/ver/164/test/adts/module.mk.in
+END
+test-inlist.c
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/p/c-mpi/code/!svn/ver/168/test/adts/test-inlist.c
+END

@@ -1,0 +1,7 @@
+[E 01:10:41.767269 R:0] Error message.
+[E 01:10:41.767324 R:0] Error message, printf style: 12345.
+[E 01:10:41.767332 R:0] test/gossip/test-masks.c main() line 53: Error message, with line info.
+[D 01:10:41.767339 R:0] Debug mask 1.
+[D 01:10:41.767344 R:0] Debug mask 2.
+[D 01:10:41.767348 R:0] test/gossip/test-masks.c main() line 60: Debug mask 1, with line info.
+[D 01:10:41.767354 R:0] test/gossip/test-masks.c main() line 61: Debug mask 2, with line info.

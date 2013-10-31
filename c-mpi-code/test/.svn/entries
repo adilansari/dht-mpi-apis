@@ -1,0 +1,52 @@
+10
+
+dir
+202
+http://svn.code.sf.net/p/c-mpi/code/test
+http://svn.code.sf.net/p/c-mpi/code
+
+
+
+2011-05-02T22:55:48.185770Z
+201
+jmwozniak
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+9dd9860f-b6e0-4e28-a34d-40c01b674943
+
+cmpi
+dir
+
+mpirpc
+dir
+
+adts
+dir
+
+cmpi-db
+dir
+
+driver
+dir
+
+cmpi-io
+dir
+
+gossip
+dir
+
+mpi_tools
+dir
+

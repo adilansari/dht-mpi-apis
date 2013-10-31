@@ -1,0 +1,94 @@
+extra: two
+extra: four
+[(three,3),(three,3),(four,4),(zero,0)]
+size: 4 
+extra: three
+extra: three
+[(four,4),(zero,0),(five,5)]
+size: 3 
+[(four,4),(zero,0),(five,5),(eight,8)]
+size: 4 
+From string: [(four,4),(zero,0),(five,5),(eight,8)]
+extra: four
+[(zero,0),(five,5),(eight,8)]
+size: 3 
+extra: zero
+[(five,5),(eight,8)]
+polling...
+got: five 
+extra: five
+[(eight,8)]
+got: eight 
+extra: eight
+[]
+From string: []
+[(binary@5,[data\0])]
+extra: binary
+data: [data]
+[]
+adding: 0
+[(0@0,[])]
+adding: 2
+[(0@0,[]),(2@2,[XX])]
+adding: 3
+[(0@0,[]),(2@2,[XX]),(3@3,[XXX])]
+adding: 4
+[(0@0,[]),(2@2,[XX]),(3@3,[XXX]),(4@4,[XXXX])]
+adding: 5
+extra: 0
+data: []
+[(2@2,[XX]),(3@3,[XXX]),(4@4,[XXXX]),(5@5,[XXXXX])]
+adding: 8
+extra: 2
+data: [XX]
+[(3@3,[XXX]),(4@4,[XXXX]),(5@5,[XXXXX]),(8@8,[XXXXXXXX])]
+adding: 9
+extra: 3
+data: [XXX]
+[(4@4,[XXXX]),(5@5,[XXXXX]),(8@8,[XXXXXXXX]),(9@9,[XXXXXXXXX])]
+adding: 1
+extra: 4
+data: [XXXX]
+[(5@5,[XXXXX]),(8@8,[XXXXXXXX]),(9@9,[XXXXXXXXX]),(1@1,[X])]
+adding: 3
+extra: 5
+data: [XXXXX]
+[(8@8,[XXXXXXXX]),(9@9,[XXXXXXXXX]),(1@1,[X]),(3@3,[XXX])]
+adding: 4
+extra: 8
+data: [XXXXXXXX]
+[(9@9,[XXXXXXXXX]),(1@1,[X]),(3@3,[XXX]),(4@4,[XXXX])]
+adding: 0
+extra: 9
+data: [XXXXXXXXX]
+[(1@1,[X]),(3@3,[XXX]),(4@4,[XXXX]),(0@0,[])]
+adding: 2
+extra: 1
+data: [X]
+[(3@3,[XXX]),(4@4,[XXXX]),(0@0,[]),(2@2,[XX])]
+adding: 3
+extra: 3
+data: [XXX]
+[(4@4,[XXXX]),(0@0,[]),(2@2,[XX]),(3@3,[XXX])]
+adding: 7
+extra: 4
+data: [XXXX]
+[(0@0,[]),(2@2,[XX]),(3@3,[XXX]),(7@7,[XXXXXXX])]
+adding: 8
+extra: 0
+data: []
+[(2@2,[XX]),(3@3,[XXX]),(7@7,[XXXXXXX]),(8@8,[XXXXXXXX])]
+adding: 9
+extra: 2
+data: [XX]
+[(3@3,[XXX]),(7@7,[XXXXXXX]),(8@8,[XXXXXXXX]),(9@9,[XXXXXXXXX])]
+size: 4
+extra: 3
+data: [XXX]
+extra: 7
+data: [XXXXXXX]
+extra: 8
+data: [XXXXXXXX]
+extra: 9
+data: [XXXXXXXXX]
+size: 0

@@ -1,0 +1,53 @@
+
+DIR := src/cmpi
+
+CMPI_SRC :=
+CMPI_SRC += $(DIR)/cmpi.c
+CMPI_SRC += $(DIR)/node.c
+CMPI_SRC += $(DIR)/driver.c
+CMPI_SRC += $(DIR)/accessor.c
+
+# Select CMPI mode:
+ifeq (@USE_CMPI_MODE@,MONO)
+	MODE := $(DIR)/mode_mono.c
+endif
+ifeq (@USE_CMPI_MODE@,PAIRS)
+	MODE := $(DIR)/mode_pairs.c
+endif
+
+CMPI_SRC += $(MODE)
+
+ifeq (@USE_TABLE_DENSE@,1)
+	CMPI_SRC += $(DIR)/dense.c
+	CMPI_SRC += $(DIR)/driver.c
+endif
+
+ifeq (@USE_DRIVER@,1)
+	CMPI_SRC += $(DIR)/driver.c
+endif
+
+ifeq (@USE_CMPI_IO@,1)
+	CMPI_SRC += $(DIR)/cmpi-io.c
+endif
+
+ifeq (@USE_COMM_WORLD@,0)
+	CMPI_SRC += $(DIR)/client.c
+endif
+
+ifeq (@USE_DISK_PRINTF@,1)
+	CMPI_SRC += $(DIR)/cmpi_disk_printf.c
+endif
+
+ifeq (@USE_DISK_VOID@,1)
+	CMPI_SRC += $(DIR)/cmpi_disk_void.c
+endif
+
+CMPI_OBJS += $(patsubst %.c, %.o, $(CMPI_SRC))
+CMPI_OBJS += $(MPIRPC_OBJS)
+
+CMPI = lib/libcmpi.a
+
+$(CMPI): $(CMPI_OBJS) $(TABLE_OBJS)
+	$(Q) "  AR		$@"
+	$(E) install -d lib
+	$(E) ar rcs $(@) $(CMPI_OBJS) $(TABLE_OBJS)

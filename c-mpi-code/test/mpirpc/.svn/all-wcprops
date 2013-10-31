@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/p/c-mpi/code/!svn/ver/197/test/mpirpc
+END
+module.mk.in
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/p/c-mpi/code/!svn/ver/157/test/mpirpc/module.mk.in
+END
+test-returns.c
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/p/c-mpi/code/!svn/ver/197/test/mpirpc/test-returns.c
+END
+test-returns.zsh
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/p/c-mpi/code/!svn/ver/93/test/mpirpc/test-returns.zsh
+END
+test_helpers.h
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/p/c-mpi/code/!svn/ver/134/test/mpirpc/test_helpers.h
+END
+test-args.c
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/p/c-mpi/code/!svn/ver/197/test/mpirpc/test-args.c
+END
+test-ping.c
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/p/c-mpi/code/!svn/ver/197/test/mpirpc/test-ping.c
+END
+test-args.zsh
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/p/c-mpi/code/!svn/ver/168/test/mpirpc/test-args.zsh
+END
+test-blob.c
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/p/c-mpi/code/!svn/ver/197/test/mpirpc/test-blob.c
+END
+test-ping.zsh
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/p/c-mpi/code/!svn/ver/93/test/mpirpc/test-ping.zsh
+END
+test-blob.zsh
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/p/c-mpi/code/!svn/ver/168/test/mpirpc/test-blob.zsh
+END

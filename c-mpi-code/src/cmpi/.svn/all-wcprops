@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/p/c-mpi/code/!svn/ver/201/src/cmpi
+END
+mode_mono.c
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/p/c-mpi/code/!svn/ver/197/src/cmpi/mode_mono.c
+END
+cmpi-io.c
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/p/c-mpi/code/!svn/ver/1/src/cmpi/cmpi-io.c
+END
+client.c
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/p/c-mpi/code/!svn/ver/64/src/cmpi/client.c
+END
+module.mk.in
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/p/c-mpi/code/!svn/ver/154/src/cmpi/module.mk.in
+END
+accessor.c
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/p/c-mpi/code/!svn/ver/155/src/cmpi/accessor.c
+END
+mode_pairs.c
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/p/c-mpi/code/!svn/ver/121/src/cmpi/mode_pairs.c
+END
+cmpi_disk_void.c
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/p/c-mpi/code/!svn/ver/201/src/cmpi/cmpi_disk_void.c
+END
+cmpi_disk_printf.c
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/p/c-mpi/code/!svn/ver/201/src/cmpi/cmpi_disk_printf.c
+END
+node.c
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/p/c-mpi/code/!svn/ver/197/src/cmpi/node.c
+END
+cmpi.c
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/p/c-mpi/code/!svn/ver/201/src/cmpi/cmpi.c
+END
+cmpi-io-test.c
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/p/c-mpi/code/!svn/ver/1/src/cmpi/cmpi-io-test.c
+END
+driver.c
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/p/c-mpi/code/!svn/ver/201/src/cmpi/driver.c
+END

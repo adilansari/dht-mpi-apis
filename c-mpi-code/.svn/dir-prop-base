@@ -1,0 +1,11 @@
+K 10
+svn:ignore
+V 56
+.ignore
+cmpi-config.h
+cmpi-config.h.in
+Makefile
+lib
+bin
+
+END

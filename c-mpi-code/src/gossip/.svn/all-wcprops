@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/p/c-mpi/code/!svn/ver/85/src/gossip
+END
+gossip.c
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/p/c-mpi/code/!svn/ver/85/src/gossip/gossip.c
+END
+module.mk.in
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/p/c-mpi/code/!svn/ver/83/src/gossip/module.mk.in
+END

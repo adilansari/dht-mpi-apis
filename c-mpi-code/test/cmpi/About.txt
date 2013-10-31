@@ -1,0 +1,16 @@
+
+Run tests with, for example:
+
+make D=1 test/cmpi/test-startup.out
+
+You must use D=1 to get the debugging output that is
+post-processed by the test script.
+
+All clients will call cmpi_client_code().
+
+test-startup: Basic startup and shutdown.
+test-tables: Debug tables.
+test-putget: Small put() + get().
+test04: multiple put() + get().
+test05: put() + update() + get().
+test06:

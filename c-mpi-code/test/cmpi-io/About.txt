@@ -1,0 +1,3 @@
+
+test01: Simple open(). 
+test02: open() + write(). 

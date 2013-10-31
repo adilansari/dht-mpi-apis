@@ -1,0 +1,829 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook V4.5//EN"
+ "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [] >
+
+<article>
+  <articleinfo revision="0.1">
+    <title>C-MPI User Guide
+    </title>
+    <subtitle>Content-MPI
+    </subtitle>
+  </articleinfo>
+
+  <section id="overview">
+    <title>Overview
+    </title>
+    <para>
+      This manual provides reference material for the Content-MPI
+      (C-MPI) DHT.
+    </para>
+    <para>
+      C-MPI provides a key/value store for distributed computing
+      over MPI.
+    </para>
+  </section>
+
+  <section id="quickstart">
+    <title>Quick Start
+    </title>
+    <para>
+      The fastest way to get a quick overview of provided features
+      is to just run:
+      <programlisting>
+        ./setup.sh
+        ./configure --config-cache --enable-table-dense-1 --enable-tests --with-mpi=${HOME}/sfw/mpich2-1.2.1p1
+        make D=1 test_results
+      </programlisting>
+      Then, just take a look at the test code and output to see
+      how things work.
+    </para>
+  </section>
+
+  <section id="usecases">
+    <title>Use Cases
+    </title>
+    <section>
+      <title>MPI Library
+      </title>
+      <para>
+	C-MPI can be used as an MPI library.
+        In this mode, the user allocates some number of DHT nodes
+        and DHT clients.
+        The nodes start up and begin listening for requests.
+        The clients call into <literal>cmpi_client_code()</literal>,
+        do work, and make C-MPI calls.
+        (User programs can link to <filename>libcmpi.a</filename>
+        directly as well by imitating
+        <filename>cmpi/client.c</filename>.)
+      </para>
+
+      <programlisting>
+        <xi:include href="cmpi_client_code.c" parse="text"
+                    xmlns:xi="http://www.w3.org/2001/XInclude" />
+      </programlisting>
+
+    </section>
+    <section>
+      <title>Cluster database
+      </title>
+      <para>
+        In this mode, the DHT runs as a distributed background process
+        (<literal>cmpi-db</literal>) and the user connects to it
+        via a <literal>cp</literal>-like tool
+        (<literal>cmpi-cp</literal>).
+      </para>
+      <para>
+        Commands executed on submit host:
+        <programlisting><xi:include
+        href="login_shell.sh" parse="text"
+        xmlns:xi="http://www.w3.org/2001/XInclude" /></programlisting>
+        <literal>client_script.sh</literal>:
+        <programlisting><xi:include
+        href="client_script.sh" parse="text"
+        xmlns:xi="http://www.w3.org/2001/XInclude" /></programlisting>
+      </para>
+    </section>
+
+    <section>
+      <title>MPI-IO implementation
+      </title>
+      <para>
+        The CMPI-IO module is really only an sketch.
+        Here's the idea:
+        <orderedlist><listitem><para>
+          C-MPI provides a patch for MPICH.
+          The user applies the patch and recompiles MPICH.
+        </para></listitem></orderedlist>
+        <orderedlist><listitem><para>
+          The user writes a normal MPI/MPI-IO program but provides
+          <literal>cmpi:/</literal> pathnames to trigger the
+          CMPI-IO implementation.
+        </para></listitem></orderedlist>
+        <orderedlist><listitem><para>
+          The user launches the program with
+          <literal>mpiexec</literal>,
+          allocating extra processes for the DHT.
+        </para></listitem></orderedlist>
+        <orderedlist><listitem><para>
+          Calls like <literal>MPI_FILE_WRITE_AT()</literal>
+          are translated by ROMIO and implemented ultimately by calls
+          like <literal>ADIOI_CMPI_WriteContig()</literal>.
+          (The full list of what CMPI-IO needs to implement is in
+          <filename>ad_cmpi.h</filename>; it's actually not that bad.)
+          This method would be implemented via calls to
+          <literal>cmpi_put()</literal>/<literal>cmpi_get()</literal>.
+        </para></listitem></orderedlist>
+      </para>
+    </section>
+    <section>
+      <title>FUSE module
+      </title>
+      <para>
+        A FUSE adapter could be built using functionality similar
+        to the techniques above.
+        The user would first instantiate the <literal>cmpi-db</literal>.
+        Then, the FUSE implementation would make calls using
+        the <literal>driver</literal> interface similar to the way
+        that <filename>cmpi-cp</filename> does.
+      </para>
+    </section>
+  </section>
+
+  <section id="mpirpc">
+    <title>MPI-RPC
+    </title>
+
+    <section>
+      <title>Overview
+      </title>
+      <para>
+	The MPIRPC component is used to allow the user to
+	issue multiple asynchronous requests in one thread
+	from a higher-level, RPC, event-driven model.
+      </para>
+    </section>
+
+    <section>
+      <title>Definitions
+      </title>
+      <para>
+	<variablelist>
+	  <varlistentry>
+	    <term>MPIRPC object</term>
+	    <listitem><para>Created by an MPIRPC call.
+	    Can be waited on.
+	    On call completion, this is passed to the proceed-function.
+	    Contains the result of the call on completion.
+	    Must be freed by the user with MPIRPC_Free().
+	    </para></listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>proceed-function</term>
+	    <listitem><para>A user function pointer passed
+	    into an MPIRPC call.
+	    Called by MPIRPC on call completion with the MPIRPC object.
+	    </para></listitem>
+	  </varlistentry>
+          <varlistentry>
+	    <term>handler</term>
+	    <listitem><para>A user function that is the target
+            of an MPIRPC call.
+	    Called by MPIRPC on an incoming request.
+	    </para></listitem>
+	  </varlistentry>
+	</variablelist>
+      </para>
+    </section>
+
+    <section>
+      <title>MPIRPC_Call
+      </title>
+      <para>
+	MPIRPC_Call() creates an MPIRPC object and starts performing
+	the RPC asynchronously.  The MPIRPC object will contain the results
+	of the call when complete.
+
+	The arguments are:
+
+	<variablelist>
+	  <varlistentry>
+	    <term>MPIRPC_Node target</term>
+	    <listitem><para>
+	      The target MPIRPC_Node.
+	    </para></listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>char* name</term>
+	    <listitem><para>
+	      Remote function name
+	      Copied into the MPIRPC object.
+	      Limited to MPIRPC_MAX_NAME (128) characters.
+	      May not be NULL.
+	    </para></listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>char* args</term>
+	    <listitem><para>
+	      Short NULL-terminated string for user
+	      control data arguments.
+	      Copied into the MPIRPC object.
+	      Limited to MPIRPC_MAX_ARGS (256) characters.
+	      May be NULL.
+	    </para></listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>void* extras</term>
+	    <listitem><para>
+	      Extra user state accessible by the proceed-function.
+	    </para></listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>void (*proceed)(MPIRPC*)</term>
+	    <listitem><para>
+	      The proceed-function.
+	    </para></listitem>
+	  </varlistentry>
+	</variablelist>
+      </para>
+    </section>
+
+    <section>
+      <title>The MPIRPC Object
+      </title>
+      <para>
+	The MPIRPC object contains:
+	<variablelist>
+	  <varlistentry>
+	    <term>MPIRPC_Node target</term>
+	    <listitem><para>
+	      The target MPIRPC_Node
+	    </para></listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>status</term>
+	    <listitem><para>
+	      The status of the call:
+	      MPIRPC_STATUS_PROTO, MPIRPC_STATUS_CALLED,
+	      or MPIRPC_STATUS_RETURNED.
+	    </para></listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>char[] name</term>
+	    <listitem><para>
+	      Copy of the remote procedure name.
+	    </para></listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>char[] args</term>
+	    <listitem><para>
+	      Copy of the user argument string.
+	    </para></listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>char* blob</term>
+	    <listitem><para>
+	      Pointer to the user data blob.
+	    </para></listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>int blob_length</term>
+	    <listitem><para>
+	      Length of the user data blob.
+	    </para></listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>void* result</term>
+	    <listitem><para>
+	      Pointer to result data returned by remote procedure
+	      in fresh storage.
+	    </para></listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>int result_length</term>
+	    <listitem><para>
+	      Length of result data.
+	    </para></listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>void* extras</term>
+	    <listitem><para>
+	      Extra user pointer useful for proceed-function.
+	    </para></listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>int unique</term>
+	    <listitem><para>
+	      Internal uniquifier.
+	    </para></listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>bool cancelled</term>
+	    <listitem><para>
+	      Not yet used.
+	    </para></listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>MPIRPC_Node target</term>
+	    <listitem><para>
+	      The target MPIRPC_Node
+	    </para></listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>MPI_Request request[]</term>
+	    <listitem><para>
+	      Internal MPI objects.
+	      Released by MPIRPC_Free().
+	    </para></listitem>
+	  </varlistentry>
+	</variablelist>
+      </para>
+    </section>
+
+    <section id="mpirpc_example">
+      <title>Example
+      </title>
+      <para>
+        <programlisting>
+          sample code
+        </programlisting>
+      </para>
+    </section>
+
+    <section>
+      <title>Usage notes
+      </title>
+      <para>
+        <itemizedlist>
+          <listitem><para>
+            <emphasis>Handler routines:</emphasis>
+            The handler must copy the incoming args
+            if it wants to save them.
+            The handler must return by calling
+            <literal>MPIRPC_Return()</literal> or
+            <literal>MPIRPC_Null()</literal>.
+            Handlers can call into <literal>MPIRPC_Call()</literal>
+            but the flow eventually return to the original caller.
+          </para></listitem>
+        </itemizedlist>
+      </para>
+    </section>
+  </section>
+
+  <section id="cmpi">
+    <title>C-MPI
+    </title>
+
+    <section><title>Overview</title>
+    <para>
+      C-MPI is intended to be an easy to use MPI-based
+      distributed key/value store.
+    </para>
+    </section>
+
+    <section>
+      <title>API
+      </title>
+      <para>
+	The C-MPI API:
+
+	<variablelist>
+	  <varlistentry>
+	    <term>cmpi_init()</term>
+	    <listitem><para>
+	      Initialize C-MPI.
+	      The user must first call MPI_Init() and MPIRPC_Init().
+	    </para></listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>cmpi_put()</term>
+	    <listitem><para>
+	      Post a key/value pair in C-MPI.
+	    </para>
+	    <para>
+	      Arguments:
+	      <variablelist>
+		<varlistentry>
+		  <term>char* key</term>
+		  <listitem><para>
+		    NULL-terminated string key.
+		    Passed as the args argument to MPIRPC_Call_blob().
+		  </para></listitem>
+		</varlistentry>
+		<varlistentry>
+		  <term>void* value</term>
+		  <listitem><para>
+		    Variable-length user data.
+		    Passed as the blob argument to MPIRPC_Call_blob().
+		  </para></listitem>
+		</varlistentry>
+		<varlistentry>
+		  <term>int length</term>
+		  <listitem><para>
+		    Byte-length of value.
+		  </para></listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para></listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>cmpi_update()</term>
+	    <listitem><para>
+	      Update the value of a key/value pair in C-MPI.
+	    </para>
+	    <para>
+	      Arguments:
+	      <variablelist>
+		<varlistentry>
+		  <term>char* key</term>
+		  <listitem><para>
+		    NULL-terminated string key.
+		    Passed as the args argument to MPIRPC_Call_blob().
+		  </para></listitem>
+		</varlistentry>
+		<varlistentry>
+		  <term>void* value</term>
+		  <listitem><para>
+		    Variable-length user data.
+		    Passed as the blob argument to MPIRPC_Call_blob().
+		  </para></listitem>
+		</varlistentry>
+		<varlistentry>
+		  <term>int length</term>
+		  <listitem><para>
+		    Byte-length of value.
+		  </para></listitem>
+		</varlistentry>
+		<varlistentry>
+		  <term>int offset</term>
+		  <listitem><para>
+		    At which point to begin overwrite.
+		    Offset+length may exceed the original value length.
+		    The key/value pair need not originally exist,
+		    but if it does not, the offset must be 0.
+		  </para></listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para></listitem>
+	  </varlistentry>
+
+	  <varlistentry>
+	    <term>cmpi_get()</term>
+	    <listitem><para>
+	      Extract the value of a key/value pair into fresh storage.
+	    </para>
+	    <para>
+	      Arguments:
+	      <variablelist>
+		<varlistentry>
+		  <term>char* key</term>
+		  <listitem><para>
+		    NULL-terminated string key.
+		    Passed as the args argument to MPIRPC_Call_blob().
+		  </para></listitem>
+		</varlistentry>
+		<varlistentry>
+		  <term>void** result</term>
+		  <listitem><para>
+		    Will be set to the location of the extracted data in
+		    fresh storage.
+		  </para></listitem>
+		</varlistentry>
+		<varlistentry>
+		  <term>int* length</term>
+		  <listitem><para>
+		    Will be set to the length of the extracted data.
+		  </para></listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para></listitem>
+	  </varlistentry>
+	</variablelist>
+      </para>
+    </section>
+  </section>
+
+  <section id="build">
+    <title>Configure, build, test
+    </title>
+    <section>
+      <title>Configure
+      </title>
+      <para>
+	<orderedlist numeration="upperalpha">
+	  <listitem>
+	    <para>
+	      Run <filename>./setup.sh</filename>.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      Run <filename>./configure</filename>.
+	    </para>
+	    <variablelist>
+	      <varlistentry>
+		<term>--with-mpi</term>
+		<listitem><para>
+		  Mandatory.  The location of your MPICH installation.
+		  E.g., <filename>${HOME}/sfw/mpich2-1.1.1p1-x86_64</filename>
+		</para></listitem>
+	      </varlistentry>
+	      <varlistentry>
+		<term>--enable-table-*</term>
+		<listitem><para>
+		  Mandatory.  The underlying DHT algorithm.
+		  Current options:
+		  <variablelist>
+		    <varlistentry>
+		      <term>--enable-table-dense-1</term>
+		      <listitem><para>
+			Simple dense table defined in
+			<filename>src/dense-1</filename>.
+			Uses monolithic communicator.
+			Hashes keys and assigns to nodes by modulus.
+			Not really a DHT;
+			doesn't need neighbor tables.
+			Great for debugging, simple and fast.
+		      </para></listitem>
+		    </varlistentry>
+		    <varlistentry>
+		      <term>--enable-table-kda-2A</term>
+		      <listitem><para>
+			Kademlia implementation defined in
+			<filename>src/kda-2</filename>,
+			linked with
+			<filename>src/kda-2/conn-A.c</filename>.
+			Uses monolithic communicator.
+		      </para></listitem>
+		    </varlistentry>
+		    <varlistentry>
+		      <term>--enable-table-kda-2B</term>
+		      <listitem><para>
+			Kademlia implementation defined in
+			<filename>src/kda-2</filename>,
+			linked with
+			<filename>src/kda-2/conn-B.c</filename>.
+			Uses MPI-2 dynamic processes.
+		      </para></listitem>
+		    </varlistentry>
+		  </variablelist>
+		</para></listitem>
+	      </varlistentry>
+              <varlistentry>
+                <term>--enable-mode-*</term>
+		<listitem><para>
+                  The node layout scheme.
+                  (see Components:<filename>mode*.c</filename>).
+		  <variablelist>
+		    <varlistentry>
+		      <term>--enable-mode-mono</term>
+		      <listitem><para>
+                        The default.
+                      </para></listitem>
+                    </varlistentry>
+                    <varlistentry>
+		      <term>--enable-mode-pairs</term>
+		      <listitem><para>
+                        The default.
+                      </para></listitem>
+                    </varlistentry>
+                  </variablelist>
+                </para></listitem>
+              </varlistentry>
+	      <varlistentry>
+		<term>--enable-tests</term>
+		<listitem><para>
+		  Turn on support for tests.
+		  When compiling tests, be sure to use
+		  <literal>make D=1</literal>.
+		</para></listitem>
+	      </varlistentry>
+	      <varlistentry>
+		<term>--enable-cmpi-io</term>
+		<listitem><para>
+		  Turn on support for the skeletal CMPI-IO component.
+		</para></listitem>
+	      </varlistentry>
+	    </variablelist>
+	  </listitem>
+	</orderedlist>
+      </para>
+    </section>
+    <section>
+      <title>Build
+      </title>
+      <para>
+	Each component defines its behavior in a
+	<filename>module.mk.in</filename> file.
+	These are converted to <filename>module.mk</filename>
+	by <literal>configure</literal>
+	(or <literal>config.status</literal>).
+	These components typically append to variables or
+	define additional targes.
+	The <filename>Makefile</filename> includes all
+	<filename>module.mk</filename>s and manages the whole
+	build.
+      </para>
+      <para>
+	Functions like <literal>cmpi_get()</literal> are defined in
+	multiple places
+	(<literal>cmpi_dense.c</literal>,
+	<literal>cmpi-kademlia.c</literal>).
+	The choice of which to compile is made at configure time.
+      </para>
+      <para>
+	Useful arguments to <literal>make</literal>:
+	<variablelist>
+	  <varlistentry>
+	    <term>D=1</term>
+	    <listitem><para>
+	      Turn on debugging output.
+	      Mandatory for many tests.
+	    </para></listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>V=1</term>
+	    <listitem><para>
+	      Turn on verbose build output.
+	      Useful when debugging build process.
+	    </para></listitem>
+	  </varlistentry>
+          <varlistentry>
+            <term>-j</term>
+            <listitem><para>
+              You can do <literal>make -j tests</literal> but you
+              cannot run the tests concurrently.
+              Doing this would create multiple conflicting MPI
+              executions.
+            </para></listitem>
+          </varlistentry>
+	  <varlistentry>
+	    <term>mpirpc</term>
+	    <listitem><para>
+	      Build a stand-alone MPI-RPC lib.
+	    </para></listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>cmpi</term>
+	    <listitem><para>
+	      Build a stand-alone C-MPI lib.
+	    </para></listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>tests</term>
+	    <listitem><para>
+	      Build (but do not run) the test programs.
+	    </para></listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>test/&lt;module&gt;/test-success.out</term>
+	    <listitem><para>
+	      Run all the tests for <literal>module</literal>
+              after all of the tests for its dependencies.
+	    </para></listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term>tags</term>
+	    <listitem><para>
+	      Make an etags file based on the configuration choices.
+	    </para></listitem>
+	  </varlistentry>
+	</variablelist>
+      </para>
+    </section>
+
+    <section>
+      <title>Test
+      </title>
+      <para>
+	The tests are defined for each component in
+	<filename>module.mk</filename>.
+	For each <filename>test-*.c</filename>,
+	a <filename>test-*.x</filename> executable is produced and
+	launched (sometimes via <literal>mpiexec</literal>);
+	<literal>assert()</literal>s are used to confirm correctness.
+	Output is collected in <filename>test-*.out</filename>.
+	Sometimes the test is run from a <filename>test-*.zsh</filename>,
+	debugging output is collected and post-processed by the ZSH
+	script.
+	If the test fails, the output is moved to
+	<filename>test-*.out.failed</filename>
+	(so <literal>make</literal> does not consider it).
+	(This is how all tests will be run in the future.)
+	<variablelist>
+	  <varlistentry>
+	    <term>make D=1 test_results</term>
+	    <listitem><para>
+	      Build and run all the tests.
+	      Requires <literal>./configure --enable-tests</literal>
+	      and <literal>make D=1</literal> arguments.
+	    </para></listitem>
+	  </varlistentry>
+	</variablelist>
+      </para>
+    </section>
+  </section>
+
+  <section>
+    <title>Components
+    </title>
+    <para>
+      <imagedata fileref="cmpi-connections.png" />
+      <variablelist>
+	<varlistentry>
+	  <term>cmpi</term>
+	  <listitem><para>
+	      The C-MPI interface.
+	      Some reusable functionality is defined.
+	  </para></listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>cmpi_*.c</term>
+	  <listitem><para>
+	      The translation layer.
+	      Translates C-MPI calls into calls to a DHT
+	      implementation.
+	  </para></listitem>
+	</varlistentry>
+        <varlistentry>
+	  <term>mode_*.c</term>
+	  <listitem><para>
+            C-MPI mode selection made at configure time.
+            <variablelist>
+              <varlistentry>
+                <term>mono</term>
+                <listitem><para>
+                  Given <literal>mpiexec -n 6 cmpi-db -n 4</literal>,
+                  creates 4 DHT nodes (ranks 0-3)
+                  and 2 clients (ranks 4-5).
+                  The clients will use all nodes as contacts.
+                  Ideal for the SMP case.
+                  </para></listitem>
+              </varlistentry>
+              <varlistentry>
+                <term>pairs</term>
+                <listitem><para>
+                  Given <literal>mpiexec -n 6 cmpi-db -n 3</literal>,
+                  creates 3 DHT nodes (ranks 0-2)
+                  and 3 clients (ranks 3-5).
+                  The clients connect to a single contact
+                  (0:3, 1:4, 2:5).
+                  Ideal for the cluster case: each physical node will
+                  have one node process and one client process,
+                  the client will only contact the local node.
+                  </para></listitem>
+              </varlistentry>
+            </variablelist>
+          </para></listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>node.c</term>
+	  <listitem><para>
+	    Reusable C-MPI node.
+	    </para><para>
+	    Generally, a C-MPI node is anything that calls into
+	    <literal>cmpi_init()</literal>.
+	  </para></listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>client.c</term>
+	  <listitem><para>
+	    Reusable C-MPI client.
+	    </para><para>
+	    Generally, a C-MPI client is anything that calls into
+	    <literal>cmpi_init_client()</literal>.
+	    <literal>client.c</literal> calls into
+	    <literal>cmpi_client_code()</literal>, which is a
+	    convenient way to reuse the setup routines in
+	    <literal>client.c</literal>.
+	    See the tests for use of
+	    <literal>cmpi_client_code()</literal>.
+	    </para><para>
+	    Other clients could be built that do different things,
+	    such as provide filesystem interfaces.
+	  </para></listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>driver</term>
+	  <listitem><para>
+	    Issue commands to a client over a stream interface.
+	  </para></listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>cmpi-db</term>
+	  <listitem><para>
+	    Instantiates several nodes and clients.
+	    The clients may be manipulated by a
+	    <literal>driver</literal>.
+	  </para></listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>cmpi-cp</term>
+	  <listitem><para>
+	    Acts as a "user" in the diagram above.
+	  </para></listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>adts</term>
+	  <listitem><para>
+	    Abstract data types: lists, hash tables, etc.
+	  </para></listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>gossip</term>
+	  <listitem><para>
+	    A logging library from Phil Carns.
+	  </para></listitem>
+	</varlistentry>
+      </variablelist>
+    </para>
+  </section>
+
+  <section id="appendix">
+    <title>Appendix
+    </title>
+    <para>
+      Updated: INSERT_DATE
+    </para>
+  </section>
+</article>

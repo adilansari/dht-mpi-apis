@@ -1,0 +1,11 @@
+
+#TEST_TARGETS += test/cmpi-io/test1.out
+#TEST_TARGETS += test/cmpi-io/test2.out
+TEST_SRC      += test/cmpi-io/test01.c
+#TEST_PROGS   += test/cmpi-io/test2
+
+TEST_HELPER_OBJS += test/cmpi/test_helpers.o
+
+test/cmpi-io/test%.x: test/cmpi-io/test%.o $(CMPI) test/cmpi/test_helpers.o
+	$(Q) "  MPICC		$(@) "
+	$(E)$(MPICC) $(MPE) $(<) $(CMPI) test/cmpi/test_helpers.o $(LIBS) -o $(@)

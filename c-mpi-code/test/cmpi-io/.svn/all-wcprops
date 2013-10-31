@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/p/c-mpi/code/!svn/ver/15/test/cmpi-io
+END
+module.mk.in
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/p/c-mpi/code/!svn/ver/15/test/cmpi-io/module.mk.in
+END
+test01.c
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/p/c-mpi/code/!svn/ver/1/test/cmpi-io/test01.c
+END
+test1.c
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/p/c-mpi/code/!svn/ver/1/test/cmpi-io/test1.c
+END
+test02.c
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/p/c-mpi/code/!svn/ver/1/test/cmpi-io/test02.c
+END
+test2.c
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/p/c-mpi/code/!svn/ver/1/test/cmpi-io/test2.c
+END
+test_helpers.c
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/p/c-mpi/code/!svn/ver/1/test/cmpi-io/test_helpers.c
+END
+test1.zsh
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/p/c-mpi/code/!svn/ver/1/test/cmpi-io/test1.zsh
+END
+test2.zsh
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/p/c-mpi/code/!svn/ver/1/test/cmpi-io/test2.zsh
+END
+test_helpers.h
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/p/c-mpi/code/!svn/ver/1/test/cmpi-io/test_helpers.h
+END
+About.txt
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/p/c-mpi/code/!svn/ver/1/test/cmpi-io/About.txt
+END

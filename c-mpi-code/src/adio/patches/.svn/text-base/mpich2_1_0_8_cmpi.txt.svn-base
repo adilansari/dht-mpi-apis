@@ -1,0 +1,6 @@
+Patch for ROMIO in MPICH2 release 1.0.8 .  
+Generated with svn diff from MPICH2_1_0_8/ . 
+
+To apply: 
+1) cd to MPICH2_1_0_8/
+2) run patch -p0 -i mpich2_1_0_8_cmpi.diff

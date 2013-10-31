@@ -1,0 +1,14 @@
+K 10
+svn:ignore
+V 50
+.ignore
+fop
+manual.html
+index.html
+manual.inc.xml
+
+K 13
+svn:mergeinfo
+V 0
+
+END

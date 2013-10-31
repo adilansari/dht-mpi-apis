@@ -1,0 +1,46 @@
+
+Index of possible ADT functions
+
+void  _append(target, key)
+bool  _add(target, key)
+      { should allow duplicates }
+bool  _add_unique(target, cmp(), key)
+      { false and do nothing if key found }
+bool  _contains(target, key)
+bool  _matches(target, cmp(), data)
+DATA  _search(target, key)
+DATA  _inspect(target, data, n)
+      { search for data in target that matches given data in n bytes }
+void  _update(target, key, data, offset, length)
+void  _set(target, key, data)
+      { reset the value of the given key }
+DATA  _poll() { head }
+DATA  _head() { head }
+DATA  _pop() { tail }
+DATA  _get(i)
+
+LIST  _select(target, key)
+LIST  _pop(target, key)
+LIST  _select_where(target, cmp(), pattern)
+LIST  _pop_where(target, cmp(), pattern)
+
+bool  _remove(target, key)
+DATA  _remove(target, key)
+bool  _erase(target, key, n) -> delete
+
+void  _remove_where(target, cmp())
+
+bool  _clear(target)   remove and free all list items
+bool  _clobber(target) clear the list and free the data
+bool  _destroy(target) clobber and free the list
+
+void  _printf(format, target)         [printf]
+void  _fprintf(FILE, format, target)  [fprintf]
+void  _dump(f(), target)              [printf]
+void  _fdump(FILE, f(), target)       [fprintf]
+char* _output(f, target)              [static]
+int   _sprintf(s, format, target)     [given]
+int   _snprintf(s, n, format, target) [given]
+int   _marshal(s, n, f(), target)     [given]
+char* _serialize()                    [dynamic]
+char* _serialize_ptrs(target)         [dynamic]

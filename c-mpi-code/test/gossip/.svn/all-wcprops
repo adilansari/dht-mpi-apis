@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/p/c-mpi/code/!svn/ver/162/test/gossip
+END
+test-env.c
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/p/c-mpi/code/!svn/ver/31/test/gossip/test-env.c
+END
+test-env.zsh
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/p/c-mpi/code/!svn/ver/161/test/gossip/test-env.zsh
+END
+test-masks.c
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/p/c-mpi/code/!svn/ver/16/test/gossip/test-masks.c
+END
+test-masks.zsh
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/p/c-mpi/code/!svn/ver/161/test/gossip/test-masks.zsh
+END
+module.mk.in
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/p/c-mpi/code/!svn/ver/162/test/gossip/module.mk.in
+END
+test-do.c
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/p/c-mpi/code/!svn/ver/31/test/gossip/test-do.c
+END
+test-do.zsh
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/p/c-mpi/code/!svn/ver/161/test/gossip/test-do.zsh
+END

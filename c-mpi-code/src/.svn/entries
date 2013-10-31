@@ -1,0 +1,61 @@
+10
+
+dir
+202
+http://svn.code.sf.net/p/c-mpi/code/src
+http://svn.code.sf.net/p/c-mpi/code
+
+
+
+2011-05-03T15:55:18.975834Z
+202
+jmwozniak
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+9dd9860f-b6e0-4e28-a34d-40c01b674943
+
+cmpi
+dir
+
+cmpi-cp
+dir
+
+common
+dir
+
+mpirpc
+dir
+
+adts
+dir
+
+cmpi-db
+dir
+
+adio
+dir
+
+dense-1
+dir
+
+kda-2
+dir
+
+gossip
+dir
+
+mpi_tools
+dir
+

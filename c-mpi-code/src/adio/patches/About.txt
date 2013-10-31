@@ -1,0 +1,3 @@
+For each .diff file, see corresponding .txt instructions 
+to apply correctly to the MPI implementation source tree. 
+

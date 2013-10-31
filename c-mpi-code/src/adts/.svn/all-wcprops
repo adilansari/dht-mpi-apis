@@ -1,0 +1,95 @@
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/p/c-mpi/code/!svn/ver/202/src/adts
+END
+klist.c
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/p/c-mpi/code/!svn/ver/138/src/adts/klist.c
+END
+dpkm_list.c
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/p/c-mpi/code/!svn/ver/175/src/adts/dpkm_list.c
+END
+xtree.c
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/p/c-mpi/code/!svn/ver/197/src/adts/xtree.c
+END
+llist.c
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/p/c-mpi/code/!svn/ver/79/src/adts/llist.c
+END
+hashtable.c
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/p/c-mpi/code/!svn/ver/138/src/adts/hashtable.c
+END
+itable.c
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/p/c-mpi/code/!svn/ver/152/src/adts/itable.c
+END
+inlist.c
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/p/c-mpi/code/!svn/ver/168/src/adts/inlist.c
+END
+ltable.c
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/p/c-mpi/code/!svn/ver/1/src/adts/ltable.c
+END
+lnlist.c
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/p/c-mpi/code/!svn/ver/1/src/adts/lnlist.c
+END
+About.txt
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/p/c-mpi/code/!svn/ver/199/src/adts/About.txt
+END
+lru_table.c
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/p/c-mpi/code/!svn/ver/197/src/adts/lru_table.c
+END
+list.c
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/p/c-mpi/code/!svn/ver/202/src/adts/list.c
+END
+module.mk.in
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/p/c-mpi/code/!svn/ver/83/src/adts/module.mk.in
+END
+ilist.c
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/p/c-mpi/code/!svn/ver/152/src/adts/ilist.c
+END
+keyvalue.c
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/p/c-mpi/code/!svn/ver/147/src/adts/keyvalue.c
+END

@@ -1,0 +1,8 @@
+
+test01: Tests dpkm_list
+test02: Tests lru_table
+test03: Tests ilist
+test04: Tests inlist 
+test05: Tests lru_table
+test06: Tests list 
+test07: Tests xtree

@@ -1,0 +1,9 @@
+
+test_driver: Start up a DHT with a driver process. 
+
+test01.x: Issue a "sleep 3" command to the driver. 
+test02.x: Issue a "quit" to the driver. 
+test03.x: Insert data via the driver. 
+
+test01.zsh: Call test01.x and test02.x
+test02.zsh: Call test03.x and test02.x 

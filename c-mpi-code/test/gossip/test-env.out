@@ -1,0 +1,11 @@
+This test program will print an example debugging message on the final
+line of output if the CMPI_DEBUG_MASK environment variable is set to include
+"example" or "all" in its comma separated list of masks:
+This test program will print an example debugging message on the final
+line of output if the CMPI_DEBUG_MASK environment variable is set to include
+"example" or "all" in its comma separated list of masks:
+[D 01:10:41.574605 R:0] EXAMPLE MESSAGE
+This test program will print an example debugging message on the final
+line of output if the CMPI_DEBUG_MASK environment variable is set to include
+"example" or "all" in its comma separated list of masks:
+[D 01:10:41.583031 R:0] EXAMPLE MESSAGE

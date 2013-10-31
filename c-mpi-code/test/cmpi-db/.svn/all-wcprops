@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/p/c-mpi/code/!svn/ver/159/test/cmpi-db
+END
+module.mk.in
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/p/c-mpi/code/!svn/ver/159/test/cmpi-db/module.mk.in
+END
+test-quit.zsh
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/p/c-mpi/code/!svn/ver/131/test/cmpi-db/test-quit.zsh
+END
+test-cp1.zsh
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/p/c-mpi/code/!svn/ver/148/test/cmpi-db/test-cp1.zsh
+END
+test-loop.zsh
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/p/c-mpi/code/!svn/ver/148/test/cmpi-db/test-loop.zsh
+END

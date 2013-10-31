@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/p/c-mpi/code/!svn/ver/202/src/kda-2
+END
+hex.c
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/p/c-mpi/code/!svn/ver/1/src/kda-2/hex.c
+END
+kademlia.c
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/p/c-mpi/code/!svn/ver/202/src/kda-2/kademlia.c
+END
+unhex.c
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/p/c-mpi/code/!svn/ver/1/src/kda-2/unhex.c
+END
+hexord.c
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/p/c-mpi/code/!svn/ver/1/src/kda-2/hexord.c
+END
+ascii_map.io
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/p/c-mpi/code/!svn/ver/1/src/kda-2/ascii_map.io
+END
+conn-A.c
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/p/c-mpi/code/!svn/ver/202/src/kda-2/conn-A.c
+END
+conn-B.c
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/p/c-mpi/code/!svn/ver/201/src/kda-2/conn-B.c
+END
+conn-C.c
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/p/c-mpi/code/!svn/ver/40/src/kda-2/conn-C.c
+END
+neighbor.c
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/p/c-mpi/code/!svn/ver/201/src/kda-2/neighbor.c
+END
+cmpi_kademlia.c
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/p/c-mpi/code/!svn/ver/201/src/kda-2/cmpi_kademlia.c
+END
+module.mk.in
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/p/c-mpi/code/!svn/ver/83/src/kda-2/module.mk.in
+END
