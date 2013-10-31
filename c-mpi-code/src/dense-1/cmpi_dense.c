@@ -113,7 +113,8 @@ cmpi_translate(CMPI_ID id)
    Blocking call.
 */
 CMPI_RETURN
-cmpi_put(char* key, char* value, int length)
+//cmpi_put(char* key, char* value, int length)
+cmpi_put(char* key, void* value, int length)
 {
   struct inlist_item* item;
   MPIRPC_Node node;
@@ -149,7 +150,8 @@ cmpi_put(char* key, char* value, int length)
    Blocking call.
 */
 CMPI_RETURN
-cmpi_update(char* key, char* value, int length, int offset)
+//cmpi_update(char* key, char* value, int length, int offset)
+cmpi_update(char* key, void* value, int length, int offset)
 {
   struct inlist_item* item;
   MPIRPC_Node node;
@@ -181,7 +183,8 @@ cmpi_update(char* key, char* value, int length, int offset)
    Blocking call.
 */
 CMPI_RETURN
-cmpi_get(char* key, char** value, int* length)
+//cmpi_get(char* key, char** value, int* length)
+cmpi_get(char* key, void** value, int* length)
 {
   int i = inlist_random(contacts);
   MPIRPC_Node node;

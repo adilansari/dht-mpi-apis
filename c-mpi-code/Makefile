@@ -219,7 +219,7 @@ endif
 CFLAGS += -D __GOSSIP_ENABLE_MPI__
 
 # add package version information
-CFLAGS += -D CMPI_VERSION="\"0.1.1pre1-2013-10-31-180214\""
+CFLAGS += -D CMPI_VERSION="\"0.1.1pre1-2013-10-31-183849\""
 # optionally turn on debugging output
 ifeq ($(DEBUG),1)
 	CFLAGS += -D ENABLE_DEBUG
