@@ -8,7 +8,11 @@ Benchmarking parallel DHT storage techniques
 
 Milestone was to get a search a few libraries in MPI or OpenMP, understand the functioning, set them up and if possible, get a working model. Following are the APIs:
 
-> C-MPI-CODE
+> c-mpi-code
+
+> xmpp-mpi
+
+> chimera
 
 ####C-MPI-CODE
 1. URL: [c-mpi](http://c-mpi.sourceforge.net) 
@@ -30,3 +34,20 @@ Milestone was to get a search a few libraries in MPI or OpenMP, understand the f
         + test-putget is to test small put() and get()
     + _make clean_ each time before running test
     + _output_ for each test can be viewed in corresponding __*.out__ file
+
+####XMPP-MPI
+1. URL: [xmpp-mpi](http://apps.man.poznan.pl/trac/xmpp-mpi)
+2. **ls** into xmpp-mpi directory
+3. `./configure`
+	+ If openssl error, retry with `./configure --with-ssl=openssl` or `./configure --with-ssl=no`
+	+ In case of _gthread-2.0_ error, `sudo apt-get install libglib2.0-dev`
+4. `make install`
+
+####CHIMERA
+1. URL: [chimera](http://current.cs.ucsb.edu/projects/chimera)
+2. **ls** into chimera directory
+3. `./configure --prefix='curent directory'`
+4. `make`
+5. **ls** into `/test`
+6. `sha1_keygen [number of keys] [hostname]` will generate a set of pairs of ports and keys
+7. `./test [port] [key]`, where post is the port and key is from pair generated above. You can then send messages.

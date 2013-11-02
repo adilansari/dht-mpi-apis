@@ -11,7 +11,6 @@ src/mpirpc/mpirpc.d src/mpirpc/mpirpc.o: src/mpirpc/mpirpc.c include/mpi_tools.h
  /usr/include/x86_64-linux-gnu/bits/nan.h \
  /usr/include/x86_64-linux-gnu/bits/mathdef.h \
  /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
- /usr/include/x86_64-linux-gnu/bits/mathinline.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.6/include/stdbool.h /usr/include/stdio.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.6/include/stddef.h \
  /usr/include/x86_64-linux-gnu/bits/types.h \
@@ -19,9 +18,7 @@ src/mpirpc/mpirpc.d src/mpirpc/mpirpc.o: src/mpirpc/mpirpc.c include/mpi_tools.h
  /usr/include/_G_config.h /usr/include/wchar.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.6/include/stdarg.h \
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
- /usr/include/x86_64-linux-gnu/bits/sys_errlist.h \
- /usr/include/x86_64-linux-gnu/bits/stdio.h \
- /usr/include/x86_64-linux-gnu/bits/stdio2.h /usr/include/stdlib.h \
+ /usr/include/x86_64-linux-gnu/bits/sys_errlist.h /usr/include/stdlib.h \
  /usr/include/x86_64-linux-gnu/bits/waitflags.h \
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h /usr/include/endian.h \
  /usr/include/x86_64-linux-gnu/bits/endian.h \
@@ -31,13 +28,9 @@ src/mpirpc/mpirpc.d src/mpirpc/mpirpc.o: src/mpirpc/mpirpc.c include/mpi_tools.h
  /usr/include/x86_64-linux-gnu/bits/select.h \
  /usr/include/x86_64-linux-gnu/bits/sigset.h \
  /usr/include/x86_64-linux-gnu/bits/time.h \
- /usr/include/x86_64-linux-gnu/bits/select2.h \
  /usr/include/x86_64-linux-gnu/sys/sysmacros.h \
  /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h /usr/include/alloca.h \
- /usr/include/x86_64-linux-gnu/bits/stdlib.h /usr/include/string.h \
- /usr/include/xlocale.h /usr/include/x86_64-linux-gnu/bits/string.h \
- /usr/include/x86_64-linux-gnu/bits/string2.h \
- /usr/include/x86_64-linux-gnu/bits/string3.h \
+ /usr/include/string.h /usr/include/xlocale.h \
  /usr/include/x86_64-linux-gnu/sys/stat.h \
  /usr/include/x86_64-linux-gnu/bits/stat.h \
  /usr/include/x86_64-linux-gnu/sys/time.h /usr/include/mpich2/mpi.h \
@@ -48,12 +41,11 @@ src/mpirpc/mpirpc.d src/mpirpc/mpirpc.o: src/mpirpc/mpirpc.c include/mpi_tools.h
  /usr/lib/gcc/x86_64-linux-gnu/4.6/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/wchar.h /usr/include/syslog.h \
  /usr/include/x86_64-linux-gnu/sys/syslog.h \
- /usr/include/x86_64-linux-gnu/bits/syslog-path.h \
- /usr/include/x86_64-linux-gnu/bits/syslog.h cmpi-config.h \
+ /usr/include/x86_64-linux-gnu/bits/syslog-path.h cmpi-config.h \
  /usr/include/unistd.h /usr/include/x86_64-linux-gnu/bits/posix_opt.h \
  /usr/include/x86_64-linux-gnu/bits/environments.h \
  /usr/include/x86_64-linux-gnu/bits/confname.h /usr/include/getopt.h \
- /usr/include/x86_64-linux-gnu/bits/unistd.h include/itable.h \
- include/ilist.h include/hashtable.h /usr/include/openssl/sha.h \
- /usr/include/openssl/e_os2.h /usr/include/openssl/opensslconf.h \
- include/klist.h include/list.h include/mpirpc.h
+ include/itable.h include/ilist.h include/hashtable.h \
+ /usr/include/openssl/sha.h /usr/include/openssl/e_os2.h \
+ /usr/include/openssl/opensslconf.h include/klist.h include/list.h \
+ include/mpirpc.h

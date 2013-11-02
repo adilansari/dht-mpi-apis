@@ -376,7 +376,7 @@ config.status:904: creating test/mpi_tools/module.mk
 config.status:904: creating cmpi-config.h
 config.status:1079: cmpi-config.h is unchanged
 configure:7524: result: 
-configure:7526: result: CMPI version string: 0.1.1pre1-2013-10-31-183849
+configure:7526: result: CMPI version string: 0.1.1pre1-2013-11-01-074251
 configure:7529: result: 
 
 ## ---------------- ##
@@ -474,7 +474,7 @@ BUILD_CFLAGS=''
 BUILD_LDFLAGS=''
 CC='gcc'
 CFLAGS=' -g -O2'
-CMPI_VERSION='0.1.1pre1-2013-10-31-183849'
+CMPI_VERSION='0.1.1pre1-2013-11-01-074251'
 CPP='gcc -E'
 CPPFLAGS=''
 DEFS='-DHAVE_CONFIG_H'

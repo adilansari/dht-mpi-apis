@@ -16,7 +16,7 @@ SHELL = /bin/bash
 srcdir = .
 top_srcdir = ..
 
-prefix = \
+prefix = /home/adil/Dropbox/CSE-603/Projects/libs/chimera/temp
 exec_prefix = ${prefix}
 
 bindir = ${exec_prefix}/bin
