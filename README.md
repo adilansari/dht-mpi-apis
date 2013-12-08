@@ -34,6 +34,8 @@ Milestone was to get a search a few libraries in MPI or OpenMP, understand the f
         + test-putget is to test small put() and get()
     + _make clean_ each time before running test
     + _output_ for each test can be viewed in corresponding __*.out__ file
+9. To run startup and shutdown test on multiple nodes
+    + ./myExec.sh -s [nodes], where nodes is the number of nodes and time would be generated in output file in result/startup_time.out 
 
 ####XMPP-MPI
 1. URL: [xmpp-mpi](http://apps.man.poznan.pl/trac/xmpp-mpi)
