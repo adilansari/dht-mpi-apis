@@ -39,7 +39,8 @@ Milestone was to get a search a few libraries in MPI or OpenMP, understand the f
 1. URL: [xmpp-mpi](http://apps.man.poznan.pl/trac/xmpp-mpi)
 2. **ls** into xmpp-mpi directory
 3. `./configure`
-	+ If openssl error, retry with `./configure --with-ssl=openssl` or `./configure --with-ssl=no`
+	+ If GnuTLS error, retry with `./configure --with-ssl=openssl`
+	+ In case of openSSL error, retry with `./configure --with-ssl=no`
 	+ In case of _gthread-2.0_ error, `sudo apt-get install libglib2.0-dev`
 4. `make install`
 
@@ -51,3 +52,8 @@ Milestone was to get a search a few libraries in MPI or OpenMP, understand the f
 5. **ls** into `/test`
 6. `sha1_keygen [number of keys] [hostname]` will generate a set of pairs of ports and keys
 7. `./test [port] [key]`, where post is the port and key is from pair generated above. You can then send messages.
+
+####ZHT
+1. URL: [ZHT](https://bitbucket.org/xiaobingo/iit.datasys.zht-mpi.git)
+2. Download Google C++ protocol buffers :[here](https://protobuf.googlecode.com/files/protobuf-2.5.0.tar.gz) and follow installation instructions from README
+3. 
